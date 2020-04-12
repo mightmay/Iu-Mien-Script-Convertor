@@ -22,17 +22,20 @@ import json
 app = Flask(__name__)
 
 # routes
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['GET', 'POST'])
 
 def predict():
     # get data
-    json_data = request.get_json(force=True)
+    #json_data = request.get_json(force=True)
 
     # convert data into dict
+    input_script =request.form['from']
+    output_script=request.form['to']
+    text_to_transliterate= request.form['text']
 
-    input_script =json_data["from"]
-    output_script=json_data["to"]
-    text_to_transliterate= json_data["text"]
+#    input_script =json_data["from"]
+#    output_script=json_data["to"]
+#    text_to_transliterate= json_data["text"]
 
     transliterated_return = ThaiToNewRoman(text_to_transliterate)
     # send back to browser
