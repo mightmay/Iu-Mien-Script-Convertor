@@ -80,8 +80,19 @@ class RNN_convertor:
                 encoder_input_data[i, t, self.input_token_index[char]] = 1.
         
         # Restore the model and construct the encoder and decoder.
-        model = load_model(model_path)
-        
+        try:
+            model = load_model(model_path)
+            
+            # if train on different Keras version
+        except:
+            import h5py
+            f_2 = h5py.File(model_path,'r+')
+            data_p = f_2.attrs['training_config']
+            data_p = data_p.decode().replace("learning_rate","lr").encode()
+            f_2.attrs['training_config'] = data_p
+            f_2.close()
+            model = load_model(model_path)
+            
         encoder_inputs = model.input[0]   # input_1
         encoder_outputs, state_h_enc, state_c_enc = model.layers[2].output   # lstm_1
         encoder_states = [state_h_enc, state_c_enc]
