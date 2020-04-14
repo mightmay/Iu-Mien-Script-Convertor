@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Iu Mien Script Convertor";
+}
+@model BibleVersePowerPointCreatorWebApp.Models.ConvertMienScriptModel
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="icon" href="https://1.bp.blogspot.com/-QTybGlYI7gs/XjaDOX78-oI/AAAAAAAAwm4/S0pNxJXW2yA8DZUitprRWiyFqXMDxp9ZgCNcBGAsYHQ/s1600/favicon.png">
+
+    <script language="JavaScript" src="~/Scripts/jquery-1.12.4.js"></script>
+
+    <script language="JavaScript" src="~/Scripts/jquery-ui.js"></script>
+    <link rel="stylesheet" href="~/Scripts/jquery-ui.css">
+
+
+
+</head>
+<h2>@ViewBag.Title.</h2>
+<h4>Automatic conversion from different Iu-Mien writing system<h4>
+<h6>From and To: เมี่ยน เญย จั๋น-ไท้ หฑั่ง - Mienh nyei Janx-Taiv nzaangc (Iu Mien Thai Scripts), Mienh nyei siang-Lomaa nzaangc (Iu Mien New Roman Scripts), ມ່ຽນ ເຍີຍ ຈັ໋ນ-ເລ້າ ດສັ່ງ - Mienh nyei Janx-Lauv nzaangc (Iu Mien Lao Scripts)</h6>
+<h4>โปรแกรม แปลง อักษร ภาษาเมี่ยน จาก อักษรไทย เป็น ลาว หรือ อักษรโรมัน</h4>
+        <br>
+
+
+
+</p>
+<h3>Convert From แปลงจากอักษร</h3>
+
+    
+@using (Html.BeginForm("ConvertMienScriptInputFormActions", "Home", FormMethod.Post))
+		{
+				@Html.DropDownListFor(model => model.FromLanguage, new List<SelectListItem>
+                {
+                new SelectListItem{ Text="NEW ROMAN SCRIPT siang-Lomaa nzaangc", Value = "newromanscript" },
+                new SelectListItem{ Text="THAI SCRIPT จั๋น-ไท้ หฑั่ง", Value = "thaiscript" },  
+                new SelectListItem{ Text="LAO SCRIPT  ຈັ໋ນ-ເລ້າ ດສັ່ງ", Value = "laoscript" } 
+				}
+				)
+				
+				<br>
+
+				<h3>Convert To แปลงเป็นอักษร</h3>
+				@Html.DropDownListFor(model => model.ToLanguage, new List<SelectListItem>
+                {
+                new SelectListItem{ Text="THAI SCRIPT จั๋น-ไท้ หฑั่ง", Value = "thaiscript" },   
+                new SelectListItem{ Text="LAO SCRIPT  ຈັ໋ນ-ເລ້າ ດສັ່ງ", Value = "laoscript" } ,
+				                new SelectListItem{ Text="NEW ROMAN SCRIPT siang-Lomaa nzaangc", Value = "newromanscript" }
+
+				}
+				)
+				
+        <br>
+		<h4>Input the text you want to convert here: ใส่ประโยคที่ต้องการเปลี่ยนอักษรในช่องข้างล่าง</h4>
+		<br>
+        @Html.TextBoxFor(model => model.TextBoxStringData, new { id = "convertmienscriptuserinputbox", style = "height:30px; min-width:900px; width:1000px" })
+        <br>
+		<br>
+        <input type="submit" value="CLICK HERE   กดที่นี่" style="height:50px;min-width:500px; width:600px ;color: red; font-weight: bold; " />
+		}
+
+
+<br>
+<br>
+<br>
