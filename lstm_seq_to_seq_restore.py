@@ -18,8 +18,8 @@ from keras.models import Model, load_model
 from keras.layers import Input
 import numpy as np
 
-data_path='DataSet/MienThaiToMienNewRomanDataSet.txt'
-model_path='SavedModel/MienThaiToMienNewRoman_s2s.h5'
+#data_path='DataSet/MienThaiToMienNewRomanDataSet.txt'
+#model_path='SavedModel/MienThaiToMienNewRoman_s2s.h5'
 class RNN_convertor:
     def __init__(self,data_path,model_path):
         self.batch_size = 64  # Batch size for training.
