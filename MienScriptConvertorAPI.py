@@ -10,13 +10,13 @@ POST EXAMPLE
 "text":"ก๊าน เจี๊ยน มี่ง อ๊ะ"}
 
 """
-from MienThaiToMienNewRoman_lstm_seq2seq_restore import ThaiToNewRoman
+
 import pandas as pd
 from flask import Flask, jsonify, request
 import pickle
 import json
 # load model
-
+from MienScriptConvertor import convert
 
 # app
 app = Flask(__name__)
@@ -25,24 +25,21 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 
 def predict():
-    # get data
-    #json_data = request.get_json(force=True)
 
-    # convert data into dict
-    input_script =request.form['from']
-    output_script=request.form['to']
-    text_to_transliterate= request.form['text']
 
-#    input_script =json_data["from"]
-#    output_script=json_data["to"]
-#    text_to_transliterate= json_data["text"]
+    if request.method=='POST':
+        input_script =request.form['from']
+        output_script=request.form['to']
+        text_to_transliterate= request.form['text']
+    if request.method=='GET':
+        input_script =request.args.get('from')
+        output_script=request.args.get('to')
+        text_to_transliterate= request.args.get('text')    
 
-    transliterated_return = ThaiToNewRoman(text_to_transliterate)
-    # send back to browser
-    output = {'from':input_script,'to':output_script,'input_text':text_to_transliterate,'transliterated':transliterated_return}
+    transliterated_return = convert(input_script,output_script,text_to_transliterate)
 
     # return data
-    return jsonify(results=output)
+    return (transliterated_return)
 
 if __name__ == '__main__':
     app.run(port = 5000, debug=True)
