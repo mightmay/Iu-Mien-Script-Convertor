@@ -86,6 +86,7 @@ class RNN_convertor:
             # if train on different Keras version
         except:
             import h5py
+            print("using Keras 2.3 saved model")
             f_2 = h5py.File(model_path,'r+')
             data_p = f_2.attrs['training_config']
             data_p = data_p.decode().replace("learning_rate","lr").encode()
