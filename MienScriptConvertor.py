@@ -62,8 +62,8 @@ def convert(from_script,to_script,input_text):
     RNNconvertor=RNN_convertor(data_path, model_path)
     splitted_input=re.split(reg_ex_match, word_input)
     for single_word in splitted_input:
-		print(single_word)
-		print(return_string)
+        print(single_word)
+        print(return_string)
         if single_word == '':
             continue
         
