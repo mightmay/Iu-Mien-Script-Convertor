@@ -158,6 +158,8 @@ class RNN_convertor:
     
             # Update states
             states_value = [h, c]
+        
+        #print("used LSTM seq to seq" )
     
         return decoded_sentence
     
@@ -171,7 +173,8 @@ class RNN_convertor:
         return test_input
     
     def transliterate_predict(self,text):
-
+        #print("s2s")
+        #print("s2s in="+text)
         encoded_input=self.encode_input(text)
         return_str=self.decode_sequence(encoded_input)
 

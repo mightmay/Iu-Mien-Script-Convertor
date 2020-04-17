@@ -11,10 +11,11 @@ POST EXAMPLE
 
 """
 
-import pandas as pd
-from flask import Flask, jsonify, request
-import pickle
-import json
+#import pandas as pd
+from flask import Flask, request
+#from flask import jsonify
+#import pickle
+#import json
 # load model
 from MienScriptConvertor import convert
 
@@ -36,10 +37,11 @@ def predict():
         output_script=request.args.get('to')
         text_to_transliterate= request.args.get('text')    
 
-    transliterated_return = convert(input_script,output_script,text_to_transliterate)
-
+        transliterated_return = convert(input_script,output_script,text_to_transliterate)
     # return data
     return (transliterated_return)
 
 if __name__ == '__main__':
+    
     app.run(port = 5000, debug=True)
+    #app.run(port = 5000,debug=True, use_reloader=False)

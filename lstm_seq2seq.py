@@ -73,8 +73,10 @@ epochs = 100 # Number of epochs to train for.
 latent_dim = 256 # Latent dimensionality of the encoding space.
 num_samples = 648241  # Number of samples to train on.
 # Path to the data txt file on disk.
-data_path = 'MienNewRomanToMienLaoDataSet.txt'
-
+from_script_writingsystem='MienLao'
+to_script_writingsystem='MienThai'
+data_path = 'DataSet/'+from_script_writingsystem+'To'+to_script_writingsystem+'DataSet.txt'
+file_path_model_out=from_script_writingsystem+'To'+to_script_writingsystem+'_s2s.h5'
 # Vectorize the data.
 input_texts = []
 target_texts = []
@@ -163,9 +165,10 @@ model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
 model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
           batch_size=batch_size,
           epochs=epochs,
-          validation_split=0.2, callbacks=callbacks_list)
+          #validation_split=0.2, callbacks=callbacks_list)
+          validation_split=0.01, callbacks=callbacks_list)
 # Save model
-model.save('MienNewRomanToMienLaoDataSet_s2s.h5')
+model.save(file_path_model_out)
 
 # Next: inference mode (sampling).
 # Here's the drill:

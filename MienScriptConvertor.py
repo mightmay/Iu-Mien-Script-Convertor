@@ -20,7 +20,7 @@ import re
 
 
 def search_node(from_script,to_script,input_text,root_node):
-    print('XML search input_text'+input_text)
+    #print('XML search input_text')
     for word in root_node:
 
         current_node_word=word.find(from_script)
@@ -101,7 +101,7 @@ def convert(from_script,to_script,input_text):
     
                         transliterated_return_RNN = RNNconvertor.transliterate_predict(single_word_2)
                         transliterated_return_RNN=transliterated_return_RNN.rstrip('\n')
-                        print('from Predict '+transliterated_return_RNN)
+                        #print('from Predict '+transliterated_return_RNN)
     
                     # if we also cannot use Sequence to sequence then just return the original string
                     except:
@@ -114,6 +114,7 @@ def convert(from_script,to_script,input_text):
 # Test
 #word_input="หล,ง หลง (ss); เยย? ll!? นา"
 #word_input='Mienh nyei siang-Lomaa dora so nora oh nzaangc'
-#result=convert("MienThai","MienNewRoman",word_input)
+#word_input='ນນ ເລ້າ ດສັ່ງ'
+#result=convert("MienLao","MienThai",word_input)
 #print(result)
 

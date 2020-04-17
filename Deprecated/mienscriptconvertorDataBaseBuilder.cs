@@ -43,8 +43,6 @@ namespace BibleVersePowerPointCreatorWebApp
             string VerseClean = BibleVersePowerPointCreatorWebApp.pptCreatorMain.cleanupparsedtext(VerseRaw);
             return VerseClean;
         }
-
-        // this will build the initial file
         public static string BuildThaiScriptMatches(string arg)
         {
             IDictionary<string, int> BookNameAndChapterdict =
@@ -191,6 +189,142 @@ namespace BibleVersePowerPointCreatorWebApp
 
                     }
 
+                }
+            }
+            return (notmatchedlog);
+
+        }
+
+        // this will build the initial file
+        public static string SplitIntoChapterTextThaiScriptMatches(string arg)
+        {
+            IDictionary<string, int> BookNameAndChapterdict =
+                new Dictionary<string, int>()
+             {
+
+                {"Genesis", 50 },
+                {"Exodus", 40 },
+                {"Leviticus", 27 },
+                {"Numbers", 36 },
+                {"Deuteronomy", 34 },
+                {"Joshua", 24 },
+                {"Judges", 21 },
+                {"Ruth", 4 },
+                {"1Samuel", 31 },
+                {"2Samuel", 24 },
+                {"1Kings", 22 },
+                {"2Kings", 25 },
+                {"1Chronicles", 29 },
+                {"2Chronicles", 36 },
+                {"Ezra", 10 },
+                {"Nehemiah", 13 },
+                {"Esther", 10 },
+                {"Job", 42 },
+                {"Psalm", 150 },
+                {"Proverbs",31  },
+                {"Ecclesiastes",12  },
+                {"SongOfSolomon", 8 },
+                {"Isaiah", 66 },
+                {"Jeremiah", 52 },
+                {"Lamentations",5  },
+                {"Ezekiel", 48 },
+                {"Daniel", 12 },
+                {"Hosea", 14 },
+                {"Joel", 3 },
+                {"Amos", 9 },
+                {"Obadiah",1  },
+                {"Jonah",4  },
+                {"Micah",  7},
+                {"Nahum", 3 },
+                {"Habakkuk", 3 },
+                {"Zephaniah",  3},
+                {"Haggai", 2 },
+                {"Zechariah",  14},
+                {"Malachi",  4},
+                {"Matthew", 28 },
+                {"Mark",16  },
+                {"Luke", 24 },
+                {"John",21  },
+                {"Acts", 28 },
+                {"Romans", 16 },
+                {"1Corinthians",  16},
+                {"2Corinthians", 13 },
+                {"Galatians", 6 },
+                {"Ephesians", 6 },
+                {"Philippians", 4 },
+                {"Colossians", 4 },
+                {"1Thessalonians", 5 },
+                {"2Thessalonians", 3 },
+                {"1Timothy", 6 },
+                {"2Timothy",4  },
+                {"Titus",  3},
+                {"Philemon", 1 },
+                {"Hebrews", 13 },
+                {"James", 5 },
+                {"1Peter",5  },
+                {"2Peter",3},
+                {"1John",5},
+                {"2John",1},
+                {"3John",1},
+                {"Jude",1},
+                {"Revelation",22}
+                };
+
+
+
+            string bookname = "1Chronicles";
+            int numberOfChapter = 1; //the number of chapter in this book
+            int chaptoget = 1;
+            int versetoget = 1;
+            string notmatchedlog = "\n not matched THAI-ROMAN\n";
+            foreach (KeyValuePair<string, int> folder in BookNameAndChapterdict)
+            {
+                bookname = folder.Key;
+                numberOfChapter = folder.Value;
+                for (int i = 1; i <= numberOfChapter; i++)
+                {
+                    chaptoget = i;
+                    string chapter_string = "";
+                    string filepath_save = @"new_bible\" + bookname + @"_" + chaptoget.ToString() + ".txt";
+                    string filepath_save2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filepath_save);
+
+                    for (int versei = 1; versei <= 176; versei++)
+                    {
+                        versetoget = versei;
+                        string ThaiRawVerse = "";
+                        try
+                        {
+                            ThaiRawVerse = GetBibleVerse(bookname, chaptoget, versetoget, "ThaiMien");
+
+                            }
+                        catch (Exception e)
+                        {
+                            break;
+                        }
+                        string ThaiClenedVerse = ThaiRawVerse.Replace(",", "\n");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace(".", "\n");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace(":", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("*", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("\"", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("\'", " ");
+                        //ThaiClenedVerse = ThaiClenedVerse.Replace("\n", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("\'", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("\\(", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("\\)", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("-", " ");
+                        ThaiClenedVerse = ThaiClenedVerse.Replace("^", " ");
+
+
+                        
+                            chapter_string = chapter_string + "\n" + ThaiClenedVerse;
+
+
+                        
+
+
+
+                    }
+                    File.WriteAllText(filepath_save2, chapter_string);
                 }
             }
             return (notmatchedlog);
@@ -944,6 +1078,452 @@ namespace BibleVersePowerPointCreatorWebApp
 
         }
 
+
+        public static string ExtractJSONchapter()
+        {
+            string[] BookNameEnglish = new string[66]
+                { "Genesis",
+"Exodus",
+"Leviticus",
+"Numbers",
+"Deuteronomy",
+"Joshua",
+"Judges",
+"Ruth",
+"1Samuel",
+"2Samuel",
+"1Kings",
+"2Kings",
+"1Chronicles",
+"2Chronicles",
+"Ezra",
+"Nehemiah",
+"Esther",
+"Job",
+"Psalm",
+"Proverbs",
+"Ecclesiastes",
+"SongofSolomon",
+"Isaiah",
+"Jeremiah",
+"Lamentations",
+"Ezekiel",
+"Daniel",
+"Hosea",
+"Joel",
+"Amos",
+"Obadiah",
+"Jonah",
+"Micah",
+"Nahum",
+"Habakkuk",
+"Zephaniah",
+"Haggai",
+"Zechariah",
+"Malachi",
+"Matthew",
+"Mark",
+"Luke",
+"John",
+"Acts",
+"Romans",
+"1Corinthians",
+"2Corinthians",
+"Galatians",
+"Ephesians",
+"Philippians",
+"Colossians",
+"1Thessalonians",
+"2Thessalonians",
+"1Timothy",
+"2Timothy",
+"Titus",
+"Philemon",
+"Hebrews",
+"James",
+"1Peter",
+"2Peter",
+"1John",
+"2John",
+"3John",
+"Jude",
+"Revelation"};
+            string[] BookNameNewRoman = new string[66]
+            {
+                                "Tin Deic Douh",
+                "Cuotv I^yipv",
+                "Lewi",
+                "Saauv Mienh",
+                "Nzamc Leiz-Latc",
+                "Yo^su^waa",
+                "Domh Jien",
+                "Lu^te",
+                "1 Saa^mu^en",
+                "2 Saa^mu^en",
+                "1 Hungh Douh",
+                "2 Hungh Douh",
+                "1 Zunh Doic Douh",
+                "2 Zunh Doic Douh",
+                "E^saa^laa",
+                "Ne^haa^mi",
+                "E^se^te",
+                "Yopv",
+                "Singx Nzung",
+                "Cong-Mengh Waac",
+                "Gorngv Seix Zaangc",
+                "Saa^lo^morn Nyei Nzung",
+                "I^saa^yaa",
+                "Ye^le^mi",
+                "Naanc Zingh Nzung",
+                "E^se^ken",
+                "Ndaa^ni^en",
+                "Ho^se^yaa",
+                "Yo^en",
+                "Aamotv",
+                "O^mbaa^ndi",
+                "Yonaa",
+                "Mikaa",
+                "Naa^hum",
+                "Haa^mbaa^gukc",
+                "Se^fan^yaa",
+                "Hakv^gai",
+                "Se^kaa^li^yaa",
+                "Maa^laa^ki",
+                "Matv^taai",
+                "Maako",
+                "Lugaa",
+                "Yo^han",
+                "Gong-Zoh",
+                "Lomaa",
+                "1 Ko^lin^to",
+                "2 Ko^lin^to",
+                "Gaa^laa^tie",
+                "E^fe^so",
+                "Fi^lipv^poi",
+                "Ko^lo^si",
+                "1 Te^saa^lo^ni^gaa",
+                "2 Te^saa^lo^ni^gaa",
+                "1 Ti^mo^tai",
+                "2 Ti^mo^tai",
+                "Tidatc",
+                "Fi^le^mon",
+                "Hipv^lu",
+                "Yaagorpc",
+                "1 Bide",
+                "2 Bide",
+                "1 Yo^han",
+                "2 Yo^han",
+                "3 Yo^han",
+                "Yiu^ndaa",
+                "Laauc Yaangh"
+
+            };
+            string[] BookNameOldRoman = new string[66]
+            {
+                                "Tin teig trub",
+                "Zwrtq i-yipq",
+                "le-wi",
+                "saauq myenb",
+                "Ramg leib latg",
+                "yo-su-waa",
+                "tomb Jyen",
+                "lu-Te",
+                "1 saa-mu-en",
+                "2 saa-mu-en",
+                "1 huvb trub",
+                "2 huvb trub",
+                "1 zunb txig trub",
+                "2 zunb txig trub",
+                "e-saa-laa",
+                "ne-haa-mi",
+                "e-se-Te",
+                "yopq",
+                "sivj Ruv",
+                "Zovb mevb waag",
+                "kxvq seij zavg",
+                "saa-lo-mxn Eei Ruv",
+                "i-saa-yaa",
+                "ye-le-mi",
+                "naang zivb Ruv",
+                "e-sej-Ken",
+                "Daa-ni-en",
+                "ho-se-yaa",
+                "yo-en",
+                "aa-motq",
+                "o-Baa-Di",
+                "yo-naa",
+                "mi-Kaa",
+                "naa-hum",
+                "haa-Baa-kukg",
+                "sej-fan-yaa",
+                "hakq-kai",
+                "sej-Kaa-li-yaa",
+                "maa-laa-Ki",
+                "matq-Taai",
+                "maa-Ko",
+                "lu-kaa",
+                "yo-han",
+                "kovb zob",
+                "lo-maa",
+                "1 Ko-lin-To",
+                "2 Ko-lin-To",
+                "kaa-laa-Tia",
+                "e-fe-so",
+                "fi-lipq-Pxi",
+                "Ko-lo-sij",
+                "1 Te-saa-lo-ni-kaa",
+                "2 Te-saa-lo-ni-kaa",
+                "1 Ti-mo-Tai",
+                "2 Ti-mo-Tai",
+                "Ti-tatg",
+                "fi-le-mon",
+                "hipq-lu",
+                "yaa-kxpg",
+                "1 pi-te",
+                "2 pi-te",
+                "1 yo-han",
+                "2 yo-han",
+                "3 yo-han",
+                "yiu-Daa",
+                "laaug yaavb"
+
+            };
+
+            string[] BookNameThai = new string[66]
+            {                "ทิน เต่ย โต้ว" ,
+                "ธ้วด อี​ยิบ",
+                "เล​วี" ,
+                "ซ้าว เมี่ยน" ,
+                "หฑั่ม เล์ย-หลัด" ,
+                "โย​ซู​วา" ,
+                "ต้ม เจียน" ,
+                "ลู​เท",
+                "1 ซา​มู​เอน",
+                "2 ซา​มู​เอน",
+                "1 ฮู่ง โต้ว",
+                "2 ฮู่ง โต้ว",
+                "1 ฒุ่น ต่อย โต้ว",
+                "2 ฒุ่น ต่อย โต้ว",
+                "เอ​สะ​ลา",
+                "เน​หะ​มี",
+                "เอ​เซ​เท",
+                "โย้บ",
+                "สีง ฑูง",
+                "ธง-เม่ง หว่า",
+                "ก๊อง เสย หฒั่ง",
+                "ซา​โล​มอน เญย ฑูง",
+                "อิ​สะ​ยา",
+                "เย​เล​มี",
+                "หน่าน ฒี่ง ฑูง",
+                "เอ​เส​เคน",
+                "ดา​นี​เอน",
+                "โฮ​เซ​ยา",
+                "โย​เอน",
+                "อา​โม้ด",
+                "โอ​บา​ดี",
+                "โย​นา",
+                "มี​คา",
+                "นา​ฮูม",
+                "ฮา​บา​กุก",
+                "เส​ฟัน​ยา",
+                "ฮัก​ไก",
+                "เส​คา​ลิ​ยา",
+                "มา​ลา​คี",
+                "มัด​ทาย",
+                "มา​โค",
+                "ลู​กา",
+                "โย​ฮัน",
+                "กง-โฒ่",
+                "โล​มา",
+                "1 โค​ลิน​โท",
+                "2 โค​ลิน​โท",
+                "กา​ลา​เทีย",
+                "เอ​เฟ​โซ",
+                "ฟี​ลิบ​พอย",
+                "โค​โล​สี",
+                "1 เท​สะ​โล​นิ​กา",
+                "2 เท​สะ​โล​นิ​กา",
+                "1 ทิ​โม​ไท",
+                "2 ทิ​โม​ไท",
+                "ทิ​ตัด",
+                "ฟี​เล​โมน",
+                "ฮิบ​ลู",
+                "ยา​กอบ",
+                "1 ปี​เต",
+                "2 ปี​เต",
+                "1 โย​ฮัน",
+                "2 โย​ฮัน",
+                "3 โย​ฮัน",
+                "ยิว​ดา",
+                "หล่าว ย่าง"
+                };
+            int[] numberofchapterarray = new int[66]
+            {          50 ,
+                40 ,
+                 27 ,
+                 36 ,
+                 34 ,
+                 24 ,
+                21 ,
+                 4 ,
+                 31 ,
+                24 ,
+              22 ,
+              25 ,
+               29 ,
+                36 ,
+                10 ,
+                13 ,
+               10 ,
+                42 ,
+               150 ,
+             31  ,
+               12  ,
+                8 ,
+             66 ,
+               52 ,
+               5  ,
+                48 ,
+                12 ,
+               14 ,
+              3 ,
+               9 ,
+                1  ,
+                4  ,
+                 7,
+               3 ,
+                 3 ,
+               3,
+                2 ,
+                 14,
+                4,
+               28 ,
+              16  ,
+             24 ,
+              21  ,
+                28 ,
+                 16 ,
+                 16,
+              13 ,
+                 6 ,
+             6 ,
+               4 ,
+               4 ,
+               5 ,
+                3 ,
+                6 ,
+              4  ,
+                 3,
+            1 ,
+             13 ,
+                 5 ,
+              5  ,
+             3,
+            5,
+                1,
+               1,
+            1,
+               22
+            };
+            string output = "NOTHING DONE buildfromJSON";
+
+
+
+            string script_NewRoman = ("/bible/json/mien/MienNewRoman.json");
+
+
+            for (int book_i = 57; book_i < 66; book_i++)
+            {
+                string bookname1 = BookNameNewRoman[book_i];
+                string book_name_english = BookNameEnglish[book_i];
+                string chapterstring = "1";
+                string versestring = "1";
+
+                string verse_output_1 = "-1";
+
+
+
+                int numberOfChapter = numberofchapterarray[book_i];
+                for (int chapter_i = 1; chapter_i <= numberOfChapter; chapter_i++)
+                {
+                    chapterstring = chapter_i.ToString();
+                    string chapter_string = "";
+                    string filepath_save = @"new_bible\" + book_name_english + @"_" + chapterstring + ".txt";
+                    string filepath_save2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filepath_save);
+
+                    for (int versei = 1; versei <= 176; versei++)
+                    {
+                        versestring = versei.ToString();
+
+                        try
+                        {
+                            verse_output_1 = GetBibleVerseFromJason(bookname1, chapterstring, versestring, script_NewRoman);
+
+                        }
+                        catch (Exception e)
+                        {
+                            output = output + "\n" + bookname1 + chapterstring + " " + versestring + e;
+                            break;
+                        }
+
+                        string verse_output_1_cleaned = verse_output_1.Replace(",", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace(".", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace(":", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("\"", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("”", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("“", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("\\(", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("\\)", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("(", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace(")", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("(", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("?", "\n");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("!", "\n");
+                        
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("*", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("^", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("-", " ");
+                        // verse_output_1_cleaned = verse_output_1_cleaned.Replace("\n", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("\'", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("`", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("‘", " ");
+                        verse_output_1_cleaned = verse_output_1_cleaned.Replace("’", " ");
+                        string lower_verse = verse_output_1_cleaned.ToLower();
+                        char[] charsToTrim = { ' ', '\t' };
+                        string trim_verse = lower_verse.Trim(charsToTrim);
+                        if (trim_verse == "") { continue; }
+                        if (trim_verse == " ") { continue; }
+                        if (trim_verse == " \n") { continue; }
+                        if (trim_verse == "\n") { continue; }
+                        if (trim_verse.Length > 3) {
+                        string    add_new_line = trim_verse + "\n";
+                        add_new_line = add_new_line.Replace("\n\n", "\n");
+                        add_new_line = add_new_line.Replace("\n\n\n", "\n");
+                        add_new_line = add_new_line.Replace("\n\n\n\n", "\n");
+                        chapter_string = chapter_string + add_new_line;
+
+                        }
+
+
+
+
+                    }
+                    // using the method 
+                    String[] chapter_string_splitterd= chapter_string.Split(new Char[] { '\n' });
+                    string Out_final = "";
+                    foreach (string one_line in chapter_string_splitterd)
+                        {
+                        if (one_line.Length > 3)
+                        { Out_final = Out_final + one_line + "\n"; }
+                        }
+
+                    File.WriteAllText(filepath_save2, Out_final);
+                }
+
+                output = bookname1;
+            }
+            return output;
+        }
 
         public static string buildfromJSON()
         {
