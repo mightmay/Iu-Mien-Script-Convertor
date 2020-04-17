@@ -109,6 +109,7 @@ def convert(from_script,to_script,input_text):
                     return_string=return_string+transliterated_return_RNN
 
     # return data
+    del RNNconvertor
     return (return_string)
 
 # Test
